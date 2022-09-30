@@ -18,7 +18,7 @@ FROM node:18-alpine3.15 AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm build
+RUN npm run build
 
 # This creates a new image
 # This is the one that is going to run the application
@@ -28,7 +28,7 @@ FROM node:18-alpine3.15 AS runner
 # Set working directory
 WORKDIR /usr/src/app
 
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json ./
 
 # We install only the packages of production
 RUN npm install --prod
